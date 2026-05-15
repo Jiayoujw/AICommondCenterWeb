@@ -23,8 +23,8 @@ export function UserMessage({ message }: UserMessageProps) {
         </div>
         <div className="flex items-center justify-end gap-2 mt-1">
           {message.provider && <ProviderBadge provider={message.provider} />}
-          <span className="text-[10px] text-terminal-muted">
-            {new Date(message.timestamp).toLocaleTimeString()}
+          <span className="text-[10px] text-terminal-muted tabular-nums">
+            {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </span>
         </div>
       </div>

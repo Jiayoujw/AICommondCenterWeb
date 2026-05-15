@@ -15,10 +15,10 @@ export function NeonButton({ children, onClick, className, color = 'cyan', disab
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'font-mono border rounded transition-all duration-200',
+        'font-mono border rounded transition-all duration-200 cursor-pointer',
         'bg-terminal-surface hover:bg-terminal-surface2',
         'disabled:opacity-40 disabled:cursor-not-allowed',
-        'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-terminal-bg',
+        'focus:outline-none',
         size === 'sm' && 'px-3 py-1 text-xs',
         size === 'md' && 'px-4 py-2 text-sm',
         size === 'lg' && 'px-6 py-3 text-base',

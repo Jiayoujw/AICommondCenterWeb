@@ -21,7 +21,7 @@ export function NeonCard({ children, className, color = 'cyan', glow = true, onC
         glow && color === 'cyan' && 'neon-glow-cyan',
         glow && color === 'magenta' && 'neon-glow-magenta',
         glow && color === 'green' && 'neon-glow-green',
-        onClick && 'cursor-pointer hover:scale-[1.02]',
+        onClick && 'cursor-pointer hover:border-[var(--color-neon-cyan)]/60 hover:shadow-lg',
         className
       )}
     >

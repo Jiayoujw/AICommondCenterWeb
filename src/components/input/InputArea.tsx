@@ -15,7 +15,6 @@ export function InputArea({ conversationId }: InputAreaProps) {
   const [text, setText] = useState('')
   const { send, stop, isStreaming } = useStreamingChat()
   const apiKey = useProviderStore((s) => s.providers[s.activeProvider].apiKey)
-  const createConversation = useConversationStore((s) => s.createConversation)
   const activeProvider = useProviderStore((s) => s.activeProvider)
 
   const handleSubmit = useCallback(() => {
@@ -42,7 +41,12 @@ export function InputArea({ conversationId }: InputAreaProps) {
           <NeonButton
             color="cyan"
             size="sm"
-            onClick={() => useConversationStore.getState().createConversation === createConversation && createConversation(activeProvider)}
+            onClick={() => {
+              const state = useConversationStore.getState()
+              if (state.conversations.length === 0) {
+                state.createConversation(activeProvider)
+              }
+            }}
           >
             CONFIGURE API KEY
           </NeonButton>
@@ -52,11 +56,12 @@ export function InputArea({ conversationId }: InputAreaProps) {
   }
 
   return (
-    <div className="border-t border-terminal-border bg-terminal-surface p-3">
-      <div className="flex items-end gap-2 max-w-4xl mx-auto">
+    <div className="border-t border-terminal-border bg-terminal-surface/80 backdrop-blur p-3">
+      <div className="flex items-end gap-2.5 max-w-4xl mx-auto">
         <VoiceInputButton onTranscript={handleVoiceTranscript} />
 
         <div className="flex-1">
+          <label htmlFor="chat-input" className="sr-only">Type your command</label>
           <TextInput
             value={text}
             onChange={setText}
@@ -68,9 +73,10 @@ export function InputArea({ conversationId }: InputAreaProps) {
         <button
           onClick={isStreaming ? stop : handleSubmit}
           disabled={!isStreaming && !text.trim()}
-          className="p-2 rounded border transition-all disabled:opacity-30 disabled:cursor-not-allowed border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)] hover:neon-glow-cyan bg-terminal-surface2"
+          aria-label={isStreaming ? 'Stop streaming' : 'Send message'}
+          className="min-w-[44px] min-h-[44px] rounded-lg border flex items-center justify-center transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed border-[var(--color-neon-cyan)] text-[var(--color-neon-cyan)] hover:neon-glow-cyan bg-terminal-surface2 cursor-pointer"
         >
-          {isStreaming ? <Square size={16} /> : <Send size={16} />}
+          {isStreaming ? <Square size={18} /> : <Send size={18} />}
         </button>
       </div>
     </div>

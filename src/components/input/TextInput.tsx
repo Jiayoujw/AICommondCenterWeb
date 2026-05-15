@@ -35,6 +35,7 @@ export function TextInput({ value, onChange, onSubmit, disabled }: TextInputProp
 
   return (
     <textarea
+      id="chat-input"
       ref={textareaRef}
       value={value}
       onChange={handleInput}
